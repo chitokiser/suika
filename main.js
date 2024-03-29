@@ -78,49 +78,56 @@ function addFruit() {
   World.add(world, body);
 }
 
-window.onkeydown = (event) => {
-  if (disableAction) {
-    return;
-  }
 
-  switch (event.code) {
-    case "KeyA":
-      if (interval)
-        return;
 
-      interval = setInterval(() => {
-        if (currentBody.position.x - currentFruit.radius > 30)
-          Body.setPosition(currentBody, {
-            x: currentBody.position.x - 1,
-            y: currentBody.position.y,
-          });
-      }, 5);
-      break;
-
-    case "KeyD":
-      if (interval)
-        return;
-
-      interval = setInterval(() => {
-        if (currentBody.position.x + currentFruit.radius < 590)
-        Body.setPosition(currentBody, {
-          x: currentBody.position.x + 1,
-          y: currentBody.position.y,
-        });
-      }, 5);
-      break;
-
-    case "KeyS":
-      currentBody.isSleeping = false;
-      disableAction = true;
-
-      setTimeout(() => {
-        addFruit();
-        disableAction = false;
-      }, 1000);
-      break;
-  }
-}
+  window.onkeydown = (event) => {
+    if (disableAction) {
+      return;
+    }
+  
+    switch (event.code) {
+      case "KeyA":
+        if (interval)
+          return;
+  
+        interval = setInterval(() => {
+          if (currentBody.position.x - currentFruit.radius > 30)
+            Body.setPosition(currentBody, {
+              x: currentBody.position.x - 1,
+              y: currentBody.position.y,
+            });
+        }, 5);
+        playmoveSound();
+        break;
+  
+      case "KeyD":
+        if (interval)
+          return;
+  
+        interval = setInterval(() => {
+          if (currentBody.position.x + currentFruit.radius < 590)
+            Body.setPosition(currentBody, {
+              x: currentBody.position.x + 1,
+              y: currentBody.position.y,
+            });
+        }, 5);
+        playmoveSoundL();
+        break;
+  
+      case "KeyS":
+        currentBody.isSleeping = false;
+        disableAction = true;
+  
+        setTimeout(() => {
+          addFruit();
+          disableAction = false;
+        }, 1000);
+  
+        // 사운드 재생
+        playfallSound();
+        break;
+    }
+  };
 
 window.onkeyup = (event) => {
   switch (event.code) {
@@ -130,6 +137,32 @@ window.onkeyup = (event) => {
       interval = null;
   }
 }
+
+
+function playmoveSound() {
+  const moveSound = document.getElementById('moveSound');
+  moveSound.play();
+}
+
+function playmoveSoundL() {
+  const moveSound = document.getElementById('moveSound');
+  moveSound.play();
+}
+function playfallSound() {
+  const fallsound = document.getElementById('fallSound');
+  fallsound.play();
+}
+
+function playGameOverSound() {
+  const gameOverSound = document.getElementById('gameOverSound');
+  gameOverSound.play();
+}
+
+function playFruitCollisionSound() {
+  const fruitCollisionSound = document.getElementById('fruitCollisionSound');
+  fruitCollisionSound.play();
+}
+
 
 Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
@@ -157,15 +190,29 @@ Events.on(engine, "collisionStart", (event) => {
       );
 
       World.add(world,newBody);
-    }
 
+      // 합쳐질 때 사운드 재생
+      playFruitCollisionSound();
+    }
+  
     if (
       !disableAction &&
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")) {
+
+      playGameOverSound();
       alert("Game over");
+      gameOver(); // 게임 오버 시 게임을 초기화
       
     }
   });
 });
+
+function gameOver() {
+  clearInterval(interval); // 이동 인터벌 클리어
+  World.clear(world); // 월드 초기화
+  addFruit(); // 새로운 게임을 시작하기 위해 과일 추가
+}
+
+
 
 addFruit();
