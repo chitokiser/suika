@@ -9,8 +9,21 @@ let THEME = "halloween"; // { base, halloween }
 let FRUITS = THEME === "halloween" ? FRUITS_HLW : FRUITS_BASE;
 
 const engine = Engine.create();
-let renderWidth = Math.min(window.innerWidth, 620);
-let renderHeight = Math.min(window.innerHeight, 850);
+
+
+let renderWidth, renderHeight;
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  // 모바일 디바이스인 경우
+  renderWidth = Math.min(window.innerWidth, 620);
+  renderHeight = Math.min(renderWidth * 1.4, 850); // 모바일에서는 높이를 너비의 120%로 설정
+} else {
+  // PC 또는 다른 디바이스인 경우
+  renderWidth = Math.min(window.innerWidth, 900); // PC에서는 너비를 더 크게 설정
+  renderHeight = Math.min(renderWidth * 1.2, 850); // PC에서는 높이를 너비의 80%로 설정
+}
+
+
 const render = Render.create({
   engine,
   element: document.body,

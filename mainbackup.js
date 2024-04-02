@@ -60,9 +60,8 @@ let score = 0; // 점수를 저장하는 변수 추가
 
 
 
-
 function addFruit() {
-  const index = Math.floor(Math.random() * 7); //정수
+  const index = Math.floor(Math.random() * 6); //정수
   const fruit = FRUITS[index];
 
   const body = Bodies.circle(renderWidth / 2, 50, fruit.radius, {
@@ -202,35 +201,30 @@ function playVictorySound() {
   playVictorySound.play();
 }
 
+// 탑 라인 이하 영역을 터치했을 때 과일이 떨어지도록 처리하는 함수
+function dropFruit() {
+  if (currentBody) {
+    currentBody.isSleeping = false; // 과일이 움직이도록 설정
+    disableAction = true; // 다른 동작을 비활성화하여 중복 실행을 방지
+
+    setTimeout(() => {
+      addFruit(); // 새로운 과일 추가
+      disableAction = false; // 동작 활성화
+    }, 1000); // 1초 후에 새로운 과일 추가
+    playfallSound();
+  }
+}
+
 // 탑 라인 이하 영역 터치 이벤트 처리
 window.addEventListener('touchstart', (event) => {
-    const x = event.touches[0].clientX;
-    const y = event.touches[0].clientY;
-    const renderHeight = Math.min(window.innerHeight, 850);
-  
-    if (y > renderHeight - 30) {
-      dropFruit(); // 탑 라인 이하 영역을 터치했을 때 dropFruit 함수 호출
-    }
-  });
-  
+  const x = event.touches[0].clientX;
+  const y = event.touches[0].clientY;
+  const renderHeight = Math.min(window.innerHeight, 850);
 
-function dropFruit() {
-    if (currentBody) {
-      const xPosition = Math.random() * (renderWidth - 30) + 15; // 랜덤한 x 위치 선택
-      Body.setPosition(currentBody, { x: xPosition, y: 50 }); // 탑 라인 아래에서 과일 생성
-      currentBody.isSleeping = false; // 과일이 움직이도록 설정
-      disableAction = true; // 다른 동작을 비활성화하여 중복 실행을 방지
-  
-      setTimeout(() => {
-        addFruit(); // 새로운 과일 추가
-        disableAction = false; // 동작 활성화
-      }, 2000); // 2초 후에 새로운 과일 추가 (과일이 느리게 떨어지도록 조절)
-  
-      playfallSound(); // 과일이 떨어질 때 사운드 재생
-    }
+  if (y > renderHeight - 30) {
+    dropFruit(); 
   }
-  
-
+});
 
 
 
