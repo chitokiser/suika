@@ -222,7 +222,7 @@ window.addEventListener('touchstart', (event) => {
   const renderHeight = Math.min(window.innerHeight, 850);
 
   if (y > renderHeight - 30) {
-    dropFruit(); // 탑 라인 이하 영역을 터치했을 때 dropFruit 함수 호출
+    dropFruit(); 
   }
 });
 
