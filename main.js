@@ -61,7 +61,7 @@ let score = 0; // 점수를 저장하는 변수 추가
 
 
 function addFruit() {
-  const index = Math.floor(Math.random() * 7); //정수
+  const index = Math.floor(Math.random() * 6); //정수
   const fruit = FRUITS[index];
 
   const body = Bodies.circle(renderWidth / 2, 50, fruit.radius, {
