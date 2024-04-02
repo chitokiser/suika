@@ -1,9 +1,11 @@
+// server.js
+
 const express = require('express');
 const vite = require('vite');
 const cors = require('cors'); // cors 미들웨어 추가
 
 const app = express();
-const PORT = 5173;
+const PORT = 3015;
 
 // CORS 미들웨어를 사용하여 모든 도메인에서 접근 허용
 app.use(cors());
@@ -19,3 +21,10 @@ app.listen(PORT, async () => {
     await viteServer.listen(PORT); // Express 서버의 포트로 Vite 서버 실행
     console.log(`Vite development server is running at http://localhost:${PORT}`);
 });
+
+// 게임 시작을 처리하는 엔드포인트
+app.get('/start-game', (req, res) => {
+    console.log('게임이 시작되었습니다.');
+    res.sendStatus(200);
+});
+
