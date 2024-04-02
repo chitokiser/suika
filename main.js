@@ -16,11 +16,11 @@ let renderWidth, renderHeight;
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   // 모바일 디바이스인 경우
   renderWidth = Math.min(window.innerWidth, 620);
-  renderHeight = Math.min(renderWidth * 1.4, 850); // 모바일에서는 높이를 너비의 120%로 설정
+  renderHeight = Math.min(renderWidth * 1.55, 850); // 모바일에서는 높이를 너비의 120%로 설정
 } else {
   // PC 또는 다른 디바이스인 경우
-  renderWidth = Math.min(window.innerWidth, 900); // PC에서는 너비를 더 크게 설정
-  renderHeight = Math.min(renderWidth * 1.55, 850); // PC에서는 높이를 너비의 80%로 설정
+  renderWidth = Math.min(window.innerWidth, 800); // PC에서는 너비를 더 크게 설정
+  renderHeight = Math.min(renderWidth * 1.4, 850); // PC에서는 높이를 너비의 80%로 설정
 }
 
 
@@ -240,9 +240,10 @@ window.addEventListener('touchstart', (event) => {
 });
 
 
-
 Events.on(engine, "collisionStart", (event) => {
   let fruitCollisionDetected = false;
+  let topLineCollisionDetected = false; // 탑 라인과의 충돌 여부를 확인하기 위한 변수 추가
+
   event.pairs.forEach((collision) => {
     if (collision.bodyA.index === collision.bodyB.index) {
       const index = collision.bodyA.index;
@@ -268,8 +269,8 @@ Events.on(engine, "collisionStart", (event) => {
       playFruitCollisionSound();
       fruitCollisionDetected = true;
 
-        // 충돌 발생 시 점수 증가 (2 ** 과일의 인덱스)
-        score += Math.pow(2, index);
+      // 충돌 발생 시 점수 증가 (2 ** 과일의 인덱스)
+      score += Math.pow(2, index);
       updateScore(); // 점수 업데이트 함수 호출
 
       // 승리 조건 확인
@@ -280,14 +281,18 @@ Events.on(engine, "collisionStart", (event) => {
       !disableAction &&
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")
     ) {
-      playGameOverSound();
-      alert("Game over");
-      gameStart();
-      gameOver();  
-
-      //gamestart 함수 호출
+      // 탑 라인과 충돌한 경우
+      topLineCollisionDetected = true;
     }
   });
+
+  // 탑 라인과 충돌했고 과일 충돌이 감지되지 않은 경우
+  if (topLineCollisionDetected && !fruitCollisionDetected) {
+    playGameOverSound();
+    alert("Game over");
+    gameStart();
+    gameOver();
+  }
 });
 
 function updateScore() {
