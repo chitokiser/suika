@@ -216,7 +216,7 @@ function playVictorySound() {
 
 // 탑 라인 이하 영역을 터치했을 때 과일이 떨어지도록 처리하는 함수
 function dropFruit() {
-  if (currentBody) {
+  if (currentBody && !disableAction) { // 현재 과일이 있고 동작이 비활성화되어 있지 않은 경우에만 실행
     currentBody.isSleeping = false; // 과일이 움직이도록 설정
     disableAction = true; // 다른 동작을 비활성화하여 중복 실행을 방지
 
