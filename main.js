@@ -80,7 +80,6 @@ function addFruit() {
 }
 // Touch event handling
 window.addEventListener('touchstart', (event) => {
-  event.preventDefault(); // Prevent default touch behavior
   handleTouch(event.touches[0]);
 });
 
@@ -99,8 +98,6 @@ function handleTouch(touch) {
     moveRight();
   }
 }
-
-
 
 // Movement functions
 function moveLeft() {
@@ -128,6 +125,13 @@ function moveRight() {
   }, 1); // 1ms 간격으로 호출
   playmoveSoundL();
 }
+
+// Touch event handling
+window.addEventListener('touchend', () => {
+  clearInterval(interval); // 터치 이벤트가 끝나면 clearInterval 함수 호출하여 움직임을 멈추도록 설정
+  interval = null;
+});
+
 
 // Keyboard event handling
 window.onkeydown = (event) => {
