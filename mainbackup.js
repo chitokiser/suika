@@ -78,9 +78,9 @@ function addFruit() {
 
   World.add(world, body);
 }
+
 // Touch event handling
 window.addEventListener('touchstart', (event) => {
-  event.preventDefault(); // Prevent default touch behavior
   handleTouch(event.touches[0]);
 });
 
@@ -100,8 +100,6 @@ function handleTouch(touch) {
   }
 }
 
-
-
 // Movement functions
 function moveLeft() {
   if (disableAction || interval) return;
@@ -112,7 +110,7 @@ function moveLeft() {
         x: currentBody.position.x - 1,
         y: currentBody.position.y,
       });
-  }, 1); // 1ms 간격으로 호출
+  }, 5);
   playmoveSound();
 }
 
@@ -125,7 +123,7 @@ function moveRight() {
         x: currentBody.position.x + 1,
         y: currentBody.position.y,
       });
-  }, 1); // 1ms 간격으로 호출
+  }, 5);
   playmoveSoundL();
 }
 
@@ -160,11 +158,10 @@ window.onkeyup = (event) => {
   switch (event.code) {
     case "KeyA":
     case "KeyD":
-      clearInterval(interval); // 키보드 이벤트 발생 시 움직임을 멈추도록 clearInterval 함수 호출
+      clearInterval(interval);
       interval = null;
   }
 }
-
 
 // Sound functions
 function playmoveSound() {
