@@ -202,6 +202,26 @@ function playVictorySound() {
 }
 
 
+// 탑 라인 이하 부분을 터치하여 과일이 떨어지도록 처리
+window.addEventListener('touchstart', (event) => {
+  const x = event.touches[0].clientX;
+  const y = event.touches[0].clientY;
+  const renderWidth = Math.min(window.innerWidth, 620);
+  const renderHeight = Math.min(window.innerHeight, 850);
+
+  if (y > renderHeight - 30) {
+    // 과일이 탑 라인 이하 부분을 터치하면 떨어지도록 처리
+    currentBody.isSleeping = false;
+    disableAction = true;
+
+    setTimeout(() => {
+      addFruit();
+      disableAction = false;
+    }, 1000);
+
+    playfallSound();
+  }
+});
 
 
 Events.on(engine, "collisionStart", (event) => {
