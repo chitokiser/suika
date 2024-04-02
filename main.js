@@ -201,27 +201,31 @@ function playVictorySound() {
   playVictorySound.play();
 }
 
+// 탑 라인 이하 영역을 터치했을 때 과일이 떨어지도록 처리하는 함수
+function dropFruit() {
+  if (currentBody) {
+    currentBody.isSleeping = false; // 과일이 움직이도록 설정
+    disableAction = true; // 다른 동작을 비활성화하여 중복 실행을 방지
 
-// 탑 라인 이하 부분을 터치하여 과일이 떨어지도록 처리
+    setTimeout(() => {
+      addFruit(); // 새로운 과일 추가
+      disableAction = false; // 동작 활성화
+    }, 1000); // 1초 후에 새로운 과일 추가
+    playfallSound();
+  }
+}
+
+// 탑 라인 이하 영역 터치 이벤트 처리
 window.addEventListener('touchstart', (event) => {
   const x = event.touches[0].clientX;
   const y = event.touches[0].clientY;
-  const renderWidth = Math.min(window.innerWidth, 620);
   const renderHeight = Math.min(window.innerHeight, 850);
 
   if (y > renderHeight - 30) {
-    // 과일이 탑 라인 이하 부분을 터치하면 떨어지도록 처리
-    currentBody.isSleeping = false;
-    disableAction = true;
-
-    setTimeout(() => {
-      addFruit();
-      disableAction = false;
-    }, 1000);
-
-    playfallSound();
+    dropFruit(); // 탑 라인 이하 영역을 터치했을 때 dropFruit 함수 호출
   }
 });
+
 
 
 Events.on(engine, "collisionStart", (event) => {
