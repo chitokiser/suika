@@ -20,7 +20,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 } else {
   // PC 또는 다른 디바이스인 경우
   renderWidth = Math.min(window.innerWidth, 900); // PC에서는 너비를 더 크게 설정
-  renderHeight = Math.min(renderWidth * 1.2, 850); // PC에서는 높이를 너비의 80%로 설정
+  renderHeight = Math.min(renderWidth * 1.45, 850); // PC에서는 높이를 너비의 80%로 설정
 }
 
 
