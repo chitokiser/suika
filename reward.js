@@ -1,6 +1,6 @@
 
 let address= {
-    tresure: "0x1817C606c3cE1B56e349432ab74c4010d34ad024",  //game.sol 계약 주소 
+    tresure: "0xfa1144E8B4dD23d07a1FC3400a2582fac1A9aBdD",  //game.sol 계약 주소 
 
      }
   let abi = {
@@ -10,6 +10,8 @@ let address= {
         "function gamestart(uint _id) public",
         "function  g1(address user,uint _id) public view returns(bool)",
         "function  g2(uint _id) public view returns(uint) ",
+        "function  g3() public view returns(uint)",
+        "function  g6() public view returns(uint)",
         "event reward(uint amount);"
       ]
   
@@ -23,9 +25,9 @@ let address= {
     const provider = new ethers.providers.JsonRpcProvider('https://opbnb-mainnet-rpc.bnbchain.org');
   
     let tresureContract = new ethers.Contract(address.tresure, abi.tresure, provider);
-    let total = await tresureContract.g2(0); //jack
-    
-    document.getElementById("jack").innerHTML = parseFloat(total/1e18/4).toFixed(4);
+    let vet1 = await tresureContract.g3(); //jack
+    let vetprice = await tresureContract.g6(); //jack
+    document.getElementById("jack").innerHTML = parseFloat(vet1*vetprice/1e18/4).toFixed(4);
   
     tresureContract.on('reward', (amount) => {
      console.log('찾은보물:', amount);
