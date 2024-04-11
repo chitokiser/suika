@@ -291,7 +291,6 @@ Events.on(engine, "collisionStart", (event) => {
   if (topLineCollisionDetected && !fruitCollisionDetected) {
     playGameOverSound();
     alert("Game over");
-    gameStart();
     gameOver();
   }
 });
@@ -303,7 +302,7 @@ function updateScore() {
 }
 
 function checkWinCondition() {
-  if (score >= 500) {
+  if (score >= 5000) {
     alert("Congratulations! You win!");
     playVictorySound();
     gamereward(); //
@@ -378,7 +377,7 @@ window.onresize = () => {
 
     // 리플레쉬 버튼 요소 가져오기
     const refreshButton = document.getElementById('refreshButton');
- 
+    gameStart();
 
     // 리플레쉬 버튼에 클릭 이벤트 리스너 추가
     refreshButton.addEventListener('click', () => {
