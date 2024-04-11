@@ -1,27 +1,49 @@
 
 let address= {
-    tresure: "0x7f9DC432e1B4e5D0C5994ee3439bADDb922dc061",  
-    vetbankAddr: "0x27e8F277826AE9aD67178978d2c89a52f7a5177A"
+    tresure: "0x1817C606c3cE1B56e349432ab74c4010d34ad024",  //game.sol 계약 주소 
+
      }
   let abi = {
   
     tresure: [
         "function openbox(uint _id) public",
         "function gamestart(uint _id) public",
-        "function  total( ) public view returns(uint)",
-        "function myinfo(address user) public view returns (uint256,uint256,uint256,uint256,uint256,uint256,uint256,)",
-        "function getpower(address user) public view returns(uint)",
-        "function getcollect(address _address) external view returns (uint256[] memory)",
-        "function cllect(address _address,uint num) external view returns (uint)",  //수집
+        "function  g1(address user,uint _id) public view returns(bool)",
+        "function  g2(uint _id) public view returns(uint) ",
         "event reward(uint amount);"
-      ],
+      ]
   
-      vetbank: [
-       
-        "function myinfo(address user) public view returns (uint256,uint256,uint256,uint256,uint256,uint256,address,address)",
-        ],
-  
+
   };
+
+  
+  let Vettop = async () => {
+   
+    
+    const provider = new ethers.providers.JsonRpcProvider('https://opbnb-mainnet-rpc.bnbchain.org');
+  
+    let tresureContract = new ethers.Contract(address.tresure, abi.tresure, provider);
+    let total = await tresureContract.g2(0); //jack
+    
+    document.getElementById("jack").innerHTML = parseFloat(total/1e18/4).toFixed(4);
+  
+    tresureContract.on('reward', (amount) => {
+     console.log('찾은보물:', amount);
+     let formattedAmount = (amount / 1e18).toFixed(6);
+     document.getElementById('eventT1').innerText = `포인트+ ${formattedAmount} P`;
+     treasureBox.style.display = "none";
+     const eventDiv = document.getElementById('eventDiv');
+     eventDiv.classList.remove('hidden');
+  });
+  
+  
+  }
+  
+  Vettop ();
+
+
+
+
   
   async function Gamestart(treasureId) {
     // Connect to the user's Web3 provider
@@ -106,7 +128,9 @@ let address= {
     }
 };
 
-  
+
+
+
   
  
   

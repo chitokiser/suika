@@ -7,15 +7,20 @@
     <title>CYASUIKA</title>
   </head>
   <body>
-    <input type="hidden" id="tid" value="10">
+    <input type="hidden" id="tid" value="0">
+    <input type="hidden" id="tid2" value="0">
     <audio id="gameOverSound" src="/sound/gameover.mp3"></audio>
 <audio id="fruitCollisionSound" src="/sound/add.mp3"></audio>
 <audio id="VictorySound" src="/sound/doggy.mp3"></audio>
 <audio id="fallSound" src="/sound/fall.mp3"></audio>
 <audio id="moveSound" src="/sound/move.mp3"></audio>
-<div id="score">Score: 0</div> <!-- 점수 표시를 위한 요소 --><button id="refreshButton">게임새로시작</button>
+<div id="score" style="font-size: 16px; font-weight: bold; color: rgb(203, 203, 215); margin-bottom: 10px;">Score: 0</div>
 
-    <div id="app"></div> 
+<div class="p-2 border bg-light" style="font-size: 14px; display: inline-block;">승리보상<span id="jack"></span>p</div><button id="refreshButton" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; margin-left: 10px;">게임시작</button>
+
+
+
+<div id="app"></div> 
 
 
 
@@ -26,7 +31,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript"></script>
     <script type="module" src="/main.js"></script>
-   
+    <script type="module" src="/reward.js"></script>
   </body>
 </html>
 

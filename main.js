@@ -3,6 +3,7 @@ import { FRUITS_BASE, FRUITS_HLW } from "./fruits.js";
 import { Openbox } from './reward.js';
 import { Gamestart } from './reward.js';
 
+
 import "./dark.css";
 
 let THEME = "halloween"; // { base, halloween }
@@ -19,8 +20,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   renderHeight = Math.min(renderWidth * 1.55, 850); // 모바일에서는 높이를 너비의 120%로 설정
 } else {
   // PC 또는 다른 디바이스인 경우
-  renderWidth = Math.min(window.innerWidth, 800); // PC에서는 너비를 더 크게 설정
-  renderHeight = Math.min(renderWidth * 1.4, 850); // PC에서는 높이를 너비의 80%로 설정
+  renderWidth = Math.min(window.innerWidth, 500); // PC에서는 너비를 더 크게 설정
+  renderHeight = Math.min(renderWidth * 1.5, 850); //Math.min(renderWidth * 1.5, 850)
 }
 
 
@@ -302,7 +303,7 @@ function updateScore() {
 }
 
 function checkWinCondition() {
-  if (score >= 10000) {
+  if (score >= 500) {
     alert("Congratulations! You win!");
     playVictorySound();
     gamereward(); //
@@ -318,7 +319,7 @@ function gamereward() {
 
 function gameStart() {
   
-  let treasureId = document.getElementById("tid").value;
+  let treasureId = document.getElementById("tid2").value;
   Gamestart(treasureId);
   
 }
@@ -372,15 +373,18 @@ window.onresize = () => {
   renderWidth = Math.min(window.innerWidth, 620);
   renderHeight = Math.min(window.innerHeight, 850);
   Render.setSize(render, renderWidth, renderHeight);
+ 
 };
 
     // 리플레쉬 버튼 요소 가져오기
     const refreshButton = document.getElementById('refreshButton');
+ 
 
     // 리플레쉬 버튼에 클릭 이벤트 리스너 추가
     refreshButton.addEventListener('click', () => {
         // 새로고침 함수 호출
         refreshPage();
+    
     });
 
     // 새로고침 함수 정의
